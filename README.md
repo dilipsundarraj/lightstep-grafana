@@ -28,3 +28,15 @@ There are two required parameters that need to be set in the panel JSON:
 Edit the panel in Grafana and enter the LightStep Options:
 
 ![Add a panel](doc/edit-panel.png)
+
+Or to edit the JSON of the panel (or programmatically generate):
+ -
+ -```json
+ -{
+ -  "type": "lightstep-panel",
+ -  "operationID": "OPERATION_ID",
+ -  "project": "PROJECT_NAME"
+ -}
+ -```
+
+ ![Add a panel](doc/panel-json.png)
