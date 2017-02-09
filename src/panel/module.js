@@ -32,7 +32,6 @@ class LightstepPanelCtrl extends PanelCtrl {
 
   // _refresh uses jQuery to embed a new link inside the iFrame.
   _refresh() {
-    console.log("refresh called");
     const lsURL = this.generateLink(this.timeSrv.timeRange(), this.panel.project, this.panel.operationID);
     $(`#${this.iframeID}`).attr('src', lsURL);
   }
@@ -46,7 +45,7 @@ class LightstepPanelCtrl extends PanelCtrl {
   }
 
   onInitEditMode() {
-    this.addEditorTab('Options', 'public/plugins/lightstep-panel/editor.html');
+    this.addEditorTab('LightStep Options', 'public/plugins/lightstep-panel/editor.html');
   }
 }
 

@@ -101,7 +101,6 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
         _createClass(LightstepPanelCtrl, [{
           key: '_refresh',
           value: function _refresh() {
-            console.log("refresh called");
             var lsURL = this.generateLink(this.timeSrv.timeRange(), this.panel.project, this.panel.operationID);
             $('#' + this.iframeID).attr('src', lsURL);
           }
@@ -116,7 +115,7 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
         }, {
           key: 'onInitEditMode',
           value: function onInitEditMode() {
-            this.addEditorTab('Options', 'public/plugins/lightstep-panel/editor.html');
+            this.addEditorTab('LightStep Options', 'public/plugins/lightstep-panel/editor.html');
           }
         }]);
 
