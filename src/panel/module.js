@@ -17,7 +17,7 @@ class LightstepPanelCtrl extends PanelCtrl {
     this.panel = $scope.ctrl.panel;
     this.timeSrv = $injector.get('timeSrv');
     this.refresh = this._refresh.bind(this);
-    this.iframeID = `${moment().format('X')}-ls-panel`
+    this.iframeID = `${Math.floor(Math.random()*1000)}-${this.panel.operationID}-ls-panel`
 
     _.defaults(this.panel, panelDefaults);
 
