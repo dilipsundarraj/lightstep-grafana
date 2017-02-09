@@ -81,7 +81,7 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
           _this.panel = $scope.ctrl.panel;
           _this.timeSrv = $injector.get('timeSrv');
           _this.refresh = _this._refresh.bind(_this);
-          _this.iframeID = moment().format('X') + '-ls-panel';
+          _this.iframeID = Math.floor(Math.random() * 1000) + '-' + _this.panel.operationID + '-ls-panel';
 
           _.defaults(_this.panel, panelDefaults);
 
