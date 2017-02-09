@@ -1,8 +1,10 @@
-# LightStep Grafana plugin
+# LightStep Grafana plug-in
 
 ## Installation
 
 To install the plugin, copy the contents of the git repository to your plugin directory. The default on Linux systems is `/var/lib/grafana/plugins`.
+
+Note that Grafana 4 or newer is required.
 
 ## Usage
 
