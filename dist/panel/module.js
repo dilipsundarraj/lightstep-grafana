@@ -3,7 +3,7 @@
 System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_export, _context) {
   "use strict";
 
-  var _, $, moment, PanelCtrl, _createClass, LightstepPanelCtrl;
+  var _, $, moment, PanelCtrl, _createClass, LightStepPanelCtrl;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -64,13 +64,13 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
         };
       }();
 
-      _export('PanelCtrl', LightstepPanelCtrl = function (_PanelCtrl) {
-        _inherits(LightstepPanelCtrl, _PanelCtrl);
+      _export('PanelCtrl', LightStepPanelCtrl = function (_PanelCtrl) {
+        _inherits(LightStepPanelCtrl, _PanelCtrl);
 
-        function LightstepPanelCtrl($scope, $injector) {
-          _classCallCheck(this, LightstepPanelCtrl);
+        function LightStepPanelCtrl($scope, $injector) {
+          _classCallCheck(this, LightStepPanelCtrl);
 
-          var _this = _possibleConstructorReturn(this, (LightstepPanelCtrl.__proto__ || Object.getPrototypeOf(LightstepPanelCtrl)).call(this, $scope, $injector));
+          var _this = _possibleConstructorReturn(this, (LightStepPanelCtrl.__proto__ || Object.getPrototypeOf(LightStepPanelCtrl)).call(this, $scope, $injector));
 
           var panelDefaults = {
             project: '',
@@ -98,7 +98,7 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
         // _refresh uses jQuery to embed a new link inside the iFrame.
 
 
-        _createClass(LightstepPanelCtrl, [{
+        _createClass(LightStepPanelCtrl, [{
           key: '_refresh',
           value: function _refresh() {
             var lsURL = this.generateLink(this.timeSrv.timeRange(), this.panel.project, this.panel.operationID);
@@ -110,7 +110,7 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
             var oldestUnix = timeRange.from.unix();
             var youngestUnix = timeRange.to.unix();
             var range = youngestUnix - oldestUnix;
-            return this.lightstepURL + '/' + project + '/search/' + operationID + '/embed?range=' + range + '&anchor=' + youngestUnix;
+            return this.lightstepURL + '/' + project + '/operation/' + operationID + '/embed?range=' + range + '&anchor=' + youngestUnix;
           }
         }, {
           key: 'onInitEditMode',
@@ -119,12 +119,12 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
           }
         }]);
 
-        return LightstepPanelCtrl;
+        return LightStepPanelCtrl;
       }(PanelCtrl));
 
-      LightstepPanelCtrl.template = '<iframe id={{ctrl.iframeID}} height={{ctrl.height}}px width=100% class="lightstep-grafana-panel"></iframe>';
+      LightStepPanelCtrl.template = '<iframe id={{ctrl.iframeID}} height={{ctrl.height}}px width=100% class="lightstep-grafana-panel"></iframe>';
 
-      _export('PanelCtrl', LightstepPanelCtrl);
+      _export('PanelCtrl', LightStepPanelCtrl);
     }
   };
 });

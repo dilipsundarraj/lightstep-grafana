@@ -25,11 +25,11 @@ There are two required parameters that need to be set in the panel JSON:
 * **Project name**
 * **ID of the operation or saved search**.
 
-Edit the panel JSON in Grafana:
+Edit the panel in Grafana and enter the LightStep Options:
 
-![Add a panel](doc/panel-json.png)
+![Add a panel](doc/edit-panel.png)
 
-And set the appropriate project name and operation ID in the JSON:
+Or to edit the JSON of the panel (or programmatically generate):
 
 ```json
 {
@@ -38,3 +38,5 @@ And set the appropriate project name and operation ID in the JSON:
   "project": "PROJECT_NAME"
 }
 ```
+
+ ![Add a panel](doc/panel-json.png)

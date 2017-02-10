@@ -4,7 +4,7 @@ import moment from 'moment'
 import {PanelCtrl} from  'app/plugins/sdk';
 
 
-class LightstepPanelCtrl extends PanelCtrl {
+class LightStepPanelCtrl extends PanelCtrl {
 
   constructor($scope, $injector) {
     super($scope, $injector);
@@ -41,7 +41,7 @@ class LightstepPanelCtrl extends PanelCtrl {
     const oldestUnix = timeRange.from.unix();
     const youngestUnix =  timeRange.to.unix();
     const range  = youngestUnix - oldestUnix;
-    return `${this.lightstepURL}/${project}/search/${operationID}/embed?range=${range}&anchor=${youngestUnix}`;
+    return `${this.lightstepURL}/${project}/operation/${operationID}/embed?range=${range}&anchor=${youngestUnix}`;
   }
 
   onInitEditMode() {
@@ -49,8 +49,8 @@ class LightstepPanelCtrl extends PanelCtrl {
   }
 }
 
-LightstepPanelCtrl.template = '<iframe id={{ctrl.iframeID}} height={{ctrl.height}}px width=100% class="lightstep-grafana-panel"></iframe>';
+LightStepPanelCtrl.template = '<iframe id={{ctrl.iframeID}} height={{ctrl.height}}px width=100% class="lightstep-grafana-panel"></iframe>';
 
 export {
-  LightstepPanelCtrl as PanelCtrl
+  LightStepPanelCtrl as PanelCtrl
 };

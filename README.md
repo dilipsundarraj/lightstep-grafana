@@ -30,7 +30,7 @@ Edit the panel in Grafana and enter the LightStep Options:
 ![Add a panel](doc/edit-panel.png)
 
 Or to edit the JSON of the panel (or programmatically generate):
- 
+
 ```json
 {
   "type": "lightstep-panel",
