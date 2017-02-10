@@ -79,6 +79,7 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
 
           _this.lightstepURL = 'https://app.lightstep.com';
           _this.panel = $scope.ctrl.panel;
+          _this.dashboard = $scope.ctrl.dashboard;
           _this.timeSrv = $injector.get('timeSrv');
           _this.refresh = _this._refresh.bind(_this);
           _this.iframeID = Math.floor(Math.random() * 1000) + '-' + _this.panel.operationID + '-ls-panel';
@@ -110,7 +111,11 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
             var oldestUnix = timeRange.from.unix();
             var youngestUnix = timeRange.to.unix();
             var range = youngestUnix - oldestUnix;
-            return this.lightstepURL + '/' + project + '/operation/' + operationID + '/embed?range=' + range + '&anchor=' + youngestUnix;
+            var url = this.lightstepURL + '/' + project + '/operation/' + operationID + '/embed?range=' + range + '&anchor=' + youngestUnix;
+            if (this.dashboard.timezone === 'utc') {
+              url = url + '&utc=true';
+            }
+            return url;
           }
         }, {
           key: 'onInitEditMode',

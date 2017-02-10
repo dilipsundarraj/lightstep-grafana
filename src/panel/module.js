@@ -15,6 +15,7 @@ class LightStepPanelCtrl extends PanelCtrl {
 
     this.lightstepURL = 'https://app.lightstep.com';
     this.panel = $scope.ctrl.panel;
+    this.dashboard = $scope.ctrl.dashboard;
     this.timeSrv = $injector.get('timeSrv');
     this.refresh = this._refresh.bind(this);
     this.iframeID = `${Math.floor(Math.random()*1000)}-${this.panel.operationID}-ls-panel`
@@ -41,7 +42,11 @@ class LightStepPanelCtrl extends PanelCtrl {
     const oldestUnix = timeRange.from.unix();
     const youngestUnix =  timeRange.to.unix();
     const range  = youngestUnix - oldestUnix;
-    return `${this.lightstepURL}/${project}/operation/${operationID}/embed?range=${range}&anchor=${youngestUnix}`;
+    let url = `${this.lightstepURL}/${project}/operation/${operationID}/embed?range=${range}&anchor=${youngestUnix}`;
+    if (this.dashboard.timezone === 'utc') {
+      url = url + '&utc=true';
+    }
+    return url;
   }
 
   onInitEditMode() {
