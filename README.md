@@ -1,5 +1,8 @@
 # LightStep Grafana plugin
 
+* [Installation](#installation)
+* [Usage](#usage)
+
 ## Installation
 
 Grafana 4 or newer is required for use the LightStep panel.
@@ -14,22 +17,27 @@ If installation was successful, you should see something like the below:
 
 **NOTE:** *in order for the embedded graphs to display, you must be logged into LightStep in your browser.*
 
-### Adding a LightStep Panel
+#### Adding a LightStep Panel
+
+Once the LightStep plug-in has been installed, the LightStep Panel should be available as option when editing your dashboard.
 
 ![Add a panel](doc/add-panel.png)
 
-### Update the panel JSON
+Once the panel is added, click on the panel title and choose "Edit."
 
-There are two required parameters that need to be set in the panel JSON:
+![Edit panel options](doc/edit-button.png)
 
-* **Project name**
-* **ID of the operation or saved search**.
-
-Edit the panel in Grafana and enter the LightStep Options:
+Click on the "LightStep Options" tabs and update the **Project** and **Operation ID** for the chart:
 
 ![Add a panel](doc/edit-panel.png)
 
-Or to edit the JSON of the panel (or programmatically generate):
+This information can be found within LightStep in the URL of the chart you wish to add:
+
+![URL components](doc/url.png)
+
+#### Advanced usage: setting the options via JSON
+
+The above options may be set directly via editing the panel JSON, either via the Grafana UI or via programmatically generated panels. The minimal JSON would look something like the below (with JSON values below for `operationID` and `project` swapped out appropriately with the desired values).
 
 ```json
 {
@@ -38,5 +46,3 @@ Or to edit the JSON of the panel (or programmatically generate):
   "project": "PROJECT_NAME"
 }
 ```
-
- ![Add a panel](doc/panel-json.png)
