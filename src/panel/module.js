@@ -10,7 +10,8 @@ class LightStepPanelCtrl extends PanelCtrl {
     super($scope, $injector);
     const panelDefaults = {
       project: '',
-      operationID: ''
+      operationID: '',
+      embed_url: '' // embed_url takes precedence over project and operationID
     }
 
     this.lightstepURL = 'https://app.lightstep.com';
@@ -25,7 +26,7 @@ class LightStepPanelCtrl extends PanelCtrl {
     // There's a race condition where the first refresh event might be called before the iFrame is
     // is rendered with the correct ID meaning jQuery doesn't find it, which is why we make a
     // a delayed call to refresh().
-    this.events.on('refresh', this.refresh);
+    this.events.on('refresh', _.debounce(this.refresh, 500));
     setTimeout(this.refresh, 500);
 
     this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
@@ -33,7 +34,22 @@ class LightStepPanelCtrl extends PanelCtrl {
 
   // _refresh uses jQuery to embed a new link inside the iFrame.
   _refresh() {
-    const lsURL = this.generateLink(this.timeSrv.timeRange(), this.panel.project, this.panel.operationID);
+    // The URL gets precedent over the JSON fields component and operation
+    if (this.panel.embed_url) {
+
+      // Assumes a well-formed embed URL like:
+      // https://app.lightstep.com/loadtest/operation/rmJRsvcR/embed?range=86400
+      const split_url = this.panel.embed_url.split('/')
+      if (split_url.length > 6) {
+        this.panel.project = split_url[3];
+        this.panel.operationID = split_url[5];
+      }
+    }
+
+    const project = this.panel.project;
+    const operationID = this.panel.operationID;
+
+    const lsURL = this.generateLink(this.timeSrv.timeRange(), project, operationID);
     $(`#${this.iframeID}`).attr('src', lsURL);
   }
 

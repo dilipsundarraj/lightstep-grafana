@@ -74,7 +74,8 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
 
           var panelDefaults = {
             project: '',
-            operationID: ''
+            operationID: '',
+            embed_url: '' // embed_url takes precedence over project and operationID
           };
 
           _this.lightstepURL = 'https://app.lightstep.com';
@@ -89,7 +90,7 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
           // There's a race condition where the first refresh event might be called before the iFrame is
           // is rendered with the correct ID meaning jQuery doesn't find it, which is why we make a
           // a delayed call to refresh().
-          _this.events.on('refresh', _this.refresh);
+          _this.events.on('refresh', _.debounce(_this.refresh, 500));
           setTimeout(_this.refresh, 500);
 
           _this.events.on('init-edit-mode', _this.onInitEditMode.bind(_this));
@@ -102,7 +103,22 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
         _createClass(LightStepPanelCtrl, [{
           key: '_refresh',
           value: function _refresh() {
-            var lsURL = this.generateLink(this.timeSrv.timeRange(), this.panel.project, this.panel.operationID);
+            // The URL gets precedent over the JSON fields component and operation
+            if (this.panel.embed_url) {
+
+              // Assumes a well-formed embed URL like:
+              // https://app.lightstep.com/loadtest/operation/rmJRsvcR/embed?range=86400
+              var split_url = this.panel.embed_url.split('/');
+              if (split_url.length > 6) {
+                this.panel.project = split_url[3];
+                this.panel.operationID = split_url[5];
+              }
+            }
+
+            var project = this.panel.project;
+            var operationID = this.panel.operationID;
+
+            var lsURL = this.generateLink(this.timeSrv.timeRange(), project, operationID);
             $('#' + this.iframeID).attr('src', lsURL);
           }
         }, {
