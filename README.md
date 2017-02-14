@@ -19,7 +19,7 @@ If installation was successful, you should see something like the below:
 
 #### Adding a LightStep Panel
 
-Once the LightStep plug-in has been installed, the LightStep Panel should be available as option when editing your dashboard.
+Once the LightStep plug-in has been installed, the LightStep Panel should be available as an option when editing your dashboard.
 
 ![Add a panel](doc/add-panel.png)
 
