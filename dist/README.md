@@ -27,13 +27,10 @@ Once the panel is added, click on the panel title and choose "Edit."
 
 ![Edit panel options](doc/edit-button.png)
 
-Click on the "LightStep Options" tabs and update the **Project** and **Operation ID** for the chart:
+Click on the "LightStep Options" tab and copy in the embed URL, as provided in LightStep, into the given field.
 
-![Add a panel](doc/edit-panel.png)
+![Add a panel](doc/panel-url.png)
 
-This information can be found within LightStep in the URL of the chart you wish to add:
-
-![URL components](doc/url.png)
 
 #### Advanced usage: setting the options via JSON
 
@@ -46,3 +43,7 @@ The above options may be set directly via editing the panel JSON, either via the
   "project": "PROJECT_NAME"
 }
 ```
+
+This information can be found within LightStep in the URL of the chart you wish to add:
+
+![URL components](doc/url.png)
