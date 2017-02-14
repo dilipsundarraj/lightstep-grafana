@@ -5,7 +5,7 @@
 
 ## Installation
 
-Grafana 4 or newer is required for use the LightStep panel.
+Grafana 3.1.0 or later is required for use the LightStep panel.
 
 To install the plugin, copy the contents of the git repository to your plugins directory. The default on Linux systems is `/var/lib/grafana/plugins`.  Depending on your setup, you may need to restart your Grafana instance after the plug-in is installed.
 
