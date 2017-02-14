@@ -127,7 +127,9 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
         return LightStepPanelCtrl;
       }(PanelCtrl));
 
-      LightStepPanelCtrl.template = '<iframe id={{ctrl.iframeID}} height={{ctrl.height}}px width=100% class="lightstep-grafana-panel"></iframe>';
+      // We overlay a div in the bottom right corner to prevent the panel resizer from losing control of
+      // the mouse to the iFrame.
+      LightStepPanelCtrl.template = '<iframe id={{ctrl.iframeID}} height={{ctrl.height}}px width=100% class="lightstep-grafana-panel"></iframe>\n  <div style="background-color: blue; position: absolute; bottom: 0; right: 0; height: 50px; width: 50px"></div>';
 
       _export('PanelCtrl', LightStepPanelCtrl);
     }
