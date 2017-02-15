@@ -2,6 +2,7 @@
 
 * [Installation](#installation)
 * [Usage](#usage)
+* [License](#license)
 
 ## Installation
 
@@ -47,3 +48,7 @@ The above options may be set directly via editing the panel JSON, either via the
 This information can be found within LightStep in the URL of the chart you wish to add:
 
 ![URL components](doc/url.png)
+
+## License
+
+The LightStep Grafana plugin has an [Apache Software Foundation 2.0 license](https://github.com/lightstep/lightstep-grafana/blob/master/LICENSE).
