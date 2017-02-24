@@ -2,10 +2,11 @@
 
 * [Installation](#installation)
 * [Usage](#usage)
+* [License](#license)
 
 ## Installation
 
-Grafana 4 or newer is required for use the LightStep panel.
+Grafana 3.1.0 or later is required to use the LightStep panel.
 
 To install the plugin, copy the contents of the git repository to your plugins directory. The default on Linux systems is `/var/lib/grafana/plugins`.  Depending on your setup, you may need to restart your Grafana instance after the plug-in is installed.
 
@@ -19,7 +20,7 @@ If installation was successful, you should see something like the below:
 
 #### Adding a LightStep Panel
 
-Once the LightStep plug-in has been installed, the LightStep Panel should be available as option when editing your dashboard.
+Once the LightStep plug-in has been installed, the LightStep Panel should be available as an option when editing your dashboard.
 
 ![Add a panel](doc/add-panel.png)
 
@@ -47,3 +48,7 @@ The above options may be set directly via editing the panel JSON, either via the
 This information can be found within LightStep in the URL of the chart you wish to add:
 
 ![URL components](doc/url.png)
+
+## License
+
+The LightStep Grafana plugin has an [Apache Software Foundation 2.0 license](https://github.com/lightstep/lightstep-grafana/blob/master/LICENSE).

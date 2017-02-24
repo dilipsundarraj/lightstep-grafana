@@ -75,14 +75,15 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
           var panelDefaults = {
             project: '',
             operationID: '',
-            embed_url: '' // embed_url takes precedence over project and operationID
+            embed_url: '', // embed_url takes precedence over all other options.
+            y_max: ''
           };
 
           _this.lightstepURL = 'https://app.lightstep.com';
           _this.panel = $scope.ctrl.panel;
           _this.dashboard = $scope.ctrl.dashboard;
           _this.timeSrv = $injector.get('timeSrv');
-          _this.refresh = _this._refresh.bind(_this);
+          _this.refresh = _.debounce(_this._refresh.bind(_this), 500);
           _this.iframeID = Math.floor(Math.random() * 1000) + '-' + _this.panel.operationID + '-ls-panel';
 
           _.defaults(_this.panel, panelDefaults);
@@ -90,7 +91,7 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
           // There's a race condition where the first refresh event might be called before the iFrame is
           // is rendered with the correct ID meaning jQuery doesn't find it, which is why we make a
           // a delayed call to refresh().
-          _this.events.on('refresh', _.debounce(_this.refresh, 500));
+          _this.events.on('refresh', _this.refresh);
           setTimeout(_this.refresh, 500);
 
           _this.events.on('init-edit-mode', _this.onInitEditMode.bind(_this));
@@ -103,16 +104,31 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
         _createClass(LightStepPanelCtrl, [{
           key: '_refresh',
           value: function _refresh() {
+            var _this2 = this;
+
             // The URL gets precedent over the JSON fields component and operation
             if (this.panel.embed_url) {
+              var parser;
 
-              // Assumes a well-formed embed URL like:
-              // https://app.lightstep.com/loadtest/operation/rmJRsvcR/embed?range=86400
-              var split_url = this.panel.embed_url.split('/');
-              if (split_url.length > 6) {
-                this.panel.project = split_url[3];
-                this.panel.operationID = split_url[5];
-              }
+              (function () {
+                parser = document.createElement('a');
+
+                parser.href = _this2.panel.embed_url;
+                var split_url = parser.pathname.split('/');
+                if (split_url.length > 4) {
+                  _this2.panel.project = decodeURI(split_url[1]);
+                  _this2.panel.operationID = decodeURI(split_url[3]);
+                }
+                // parser.search returns "?k=v" so we slice off the '?', then break the string into an array
+                // of kv pairs.
+                var params_arr = parser.search.slice(1).split('&');
+                var params = {};
+                params_arr.forEach(function (param) {
+                  var kv = param.split("=");
+                  params[decodeURI(kv[0])] = decodeURI(kv[1]);
+                });
+                _this2.panel.y_max = params['ymax'];
+              })();
             }
 
             var project = this.panel.project;
@@ -124,13 +140,26 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
         }, {
           key: 'generateLink',
           value: function generateLink(timeRange, project, operationID) {
+            var proj = encodeURIComponent(project);
+            var opID = encodeURIComponent(operationID);
             var oldestUnix = timeRange.from.unix();
             var youngestUnix = timeRange.to.unix();
             var range = youngestUnix - oldestUnix;
-            var url = this.lightstepURL + '/' + project + '/operation/' + operationID + '/embed?range=' + range + '&anchor=' + youngestUnix;
+            var query = {
+              'range': range,
+              'anchor': youngestUnix
+            };
             if (this.dashboard.timezone === 'utc') {
-              url = url + '&utc=true';
+              query['utc'] = 'true';
             }
+            var y_max = this.panel.y_max;
+            if (y_max !== null && y_max !== '') {
+              query['ymax'] = this.panel.y_max;
+            }
+            var queryString = _.join(_.map(query, function (val, key) {
+              return key + '=' + val;
+            }), '&');
+            var url = this.lightstepURL + '/' + proj + '/operation/' + opID + '/embed?' + queryString;
             return url;
           }
         }, {
