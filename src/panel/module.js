@@ -13,6 +13,9 @@ class LightStepPanelCtrl extends PanelCtrl {
       operationID: '',
       embed_url: '', // embed_url takes precedence over all other options.
       y_max: '',
+      filter_duration: '',
+      filter_percentile: '',
+      filter_errors: '',
     }
 
     this.lightstepURL = 'https://app.lightstep.com';
@@ -55,7 +58,10 @@ class LightStepPanelCtrl extends PanelCtrl {
         const kv = param.split("=");
         params[decodeURI(kv[0])] = decodeURI(kv[1]);
       })
-      this.panel.y_max = params['ymax'];
+      this.panel.y_max = params['ymax'] ? params['ymax'] : '';
+      this.panel.filter_errors = params['filter_errors'] ? params['filter_errors'] : '';
+      this.panel.filter_percentile = params['filter_percentile'] ? params['filter_percentile'] : '';
+      this.panel.filter_duration = params['filter_duration'] ? params['filter_duration'] : ''
     }
 
     const project = this.panel.project;
@@ -79,9 +85,17 @@ class LightStepPanelCtrl extends PanelCtrl {
     if (this.dashboard.timezone === 'utc') {
      query['utc'] = 'true';
     }
-    const y_max = this.panel.y_max;
-    if (y_max !== null && y_max !== '') {
+    if (this.panel.y_max) {
       query['ymax'] = this.panel.y_max;
+    }
+    if (this.panel.filter_errors) {
+      query['filter_errors'] = this.panel.filter_errors;
+    }
+    if (this.panel.filter_errors) {
+      query['filter_duration'] = this.panel.filter_duration;
+    }
+    if (this.panel.filter_percentile) {
+      query['filter_percentile'] = this.panel.filter_percentile;
     }
     let queryString = _.join(_.map(query, (val, key) => { return `${key}=${val}` }), '&')
     let url = `${this.lightstepURL}/${proj}/operation/${opID}/embed?${queryString}`

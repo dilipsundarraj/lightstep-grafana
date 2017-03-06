@@ -76,7 +76,10 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
             project: '',
             operationID: '',
             embed_url: '', // embed_url takes precedence over all other options.
-            y_max: ''
+            y_max: '',
+            filter_duration: '',
+            filter_percentile: '',
+            filter_errors: ''
           };
 
           _this.lightstepURL = 'https://app.lightstep.com';
@@ -127,7 +130,10 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
                   var kv = param.split("=");
                   params[decodeURI(kv[0])] = decodeURI(kv[1]);
                 });
-                _this2.panel.y_max = params['ymax'];
+                _this2.panel.y_max = params['ymax'] ? params['ymax'] : '';
+                _this2.panel.filter_errors = params['filter_errors'] ? params['filter_errors'] : '';
+                _this2.panel.filter_percentile = params['filter_percentile'] ? params['filter_percentile'] : '';
+                _this2.panel.filter_duration = params['filter_duration'] ? params['filter_duration'] : '';
               })();
             }
 
@@ -152,9 +158,17 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
             if (this.dashboard.timezone === 'utc') {
               query['utc'] = 'true';
             }
-            var y_max = this.panel.y_max;
-            if (y_max !== null && y_max !== '') {
+            if (this.panel.y_max) {
               query['ymax'] = this.panel.y_max;
+            }
+            if (this.panel.filter_errors) {
+              query['filter_errors'] = this.panel.filter_errors;
+            }
+            if (this.panel.filter_errors) {
+              query['filter_duration'] = this.panel.filter_duration;
+            }
+            if (this.panel.filter_percentile) {
+              query['filter_percentile'] = this.panel.filter_percentile;
             }
             var queryString = _.join(_.map(query, function (val, key) {
               return key + '=' + val;
