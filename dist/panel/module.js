@@ -79,7 +79,8 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
             y_max: '',
             filter_duration: '',
             filter_percentile: '',
-            filter_errors: ''
+            filter_errors: '',
+            dark_theme: 'true'
           };
 
           _this.lightstepURL = 'https://app.lightstep.com';
@@ -134,6 +135,7 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
                 _this2.panel.filter_errors = params['filter_errors'] ? params['filter_errors'] : '';
                 _this2.panel.filter_percentile = params['filter_percentile'] ? params['filter_percentile'] : '';
                 _this2.panel.filter_duration = params['filter_duration'] ? params['filter_duration'] : '';
+                _this2.panel.dark_theme = params['dark_theme'] ? params['dark_theme'] : 'true';
               })();
             }
 
@@ -169,6 +171,9 @@ System.register(['lodash', 'jquery', 'moment', 'app/plugins/sdk'], function (_ex
             }
             if (this.panel.filter_percentile) {
               query['filter_percentile'] = this.panel.filter_percentile;
+            }
+            if (this.panel.dark_theme) {
+              query['dark_theme'] = this.panel.dark_theme;
             }
             var queryString = _.join(_.map(query, function (val, key) {
               return key + '=' + val;

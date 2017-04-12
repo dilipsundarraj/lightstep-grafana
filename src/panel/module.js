@@ -16,6 +16,7 @@ class LightStepPanelCtrl extends PanelCtrl {
       filter_duration: '',
       filter_percentile: '',
       filter_errors: '',
+      dark_theme: 'true',
     }
 
     this.lightstepURL = 'https://app.lightstep.com';
@@ -61,7 +62,8 @@ class LightStepPanelCtrl extends PanelCtrl {
       this.panel.y_max = params['ymax'] ? params['ymax'] : '';
       this.panel.filter_errors = params['filter_errors'] ? params['filter_errors'] : '';
       this.panel.filter_percentile = params['filter_percentile'] ? params['filter_percentile'] : '';
-      this.panel.filter_duration = params['filter_duration'] ? params['filter_duration'] : ''
+      this.panel.filter_duration = params['filter_duration'] ? params['filter_duration'] : '';
+      this.panel.dark_theme = params['dark_theme'] ? params['dark_theme'] : 'true';
     }
 
     const project = this.panel.project;
@@ -96,6 +98,9 @@ class LightStepPanelCtrl extends PanelCtrl {
     }
     if (this.panel.filter_percentile) {
       query['filter_percentile'] = this.panel.filter_percentile;
+    }
+    if (this.panel.dark_theme) {
+      query['dark_theme'] = this.panel.dark_theme;
     }
     let queryString = _.join(_.map(query, (val, key) => { return `${key}=${val}` }), '&')
     let url = `${this.lightstepURL}/${proj}/operation/${opID}/embed?${queryString}`
